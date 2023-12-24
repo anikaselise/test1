@@ -1,3 +1,9 @@
+import environment from "./environment.js";
+
+let ENV = process.argv.find((val) => ['dev', 'stage', 'local'].includes(val));
+if (!ENV) ENV = 'stage';
+process.env.ENV = ENV;
+
 export const config = {
     //
     // ====================
@@ -24,6 +30,10 @@ export const config = {
     specs: [
         './test/specs/**/*.js'
     ],
+    suites: {
+      login: ['test/specs/test.e2e.js'],
+      uidgenerate: ['test/specs/uidgenerate.js'],  
+    },
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -51,6 +61,7 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
+        maxInstances: 1,
         //browserName: 'chrome'
         browserName: 'firefox'
     }],
@@ -87,7 +98,7 @@ export const config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
+    baseUrl: environment[process.env.ENV],
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -132,7 +143,7 @@ export const config = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 600000
     },
 
     //

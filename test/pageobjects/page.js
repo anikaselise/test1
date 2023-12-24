@@ -10,6 +10,6 @@ export class Page {
     * @param path path of the sub page (e.g. /path/to/page.html)
     */
     open () {
-        return browser.url(`http://magnethub.seliselocal.com/login`)
+        return browser.url('/')
     }
 }
