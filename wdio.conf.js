@@ -1,6 +1,6 @@
 import environment from "./environment.js";
-import LoginPage from './test/pageobjects/login.page.js'
-
+import LoginPage from './test/pageobjects/login.page.js';
+import video from 'wdio-video-reporter';
 let ENV = process.argv.find((val) => ['dev', 'stage', 'local'].includes(val));
 if (!ENV) ENV = 'stage';
 process.env.ENV = ENV;
@@ -37,6 +37,7 @@ export const config = {
       dashboard: ['test/specs/dashboard.js'],
       pwa: ['test/specs/pwa.js'],
       usercreate: ['test/specs/usercreate.js'],
+      fileupload: ['test/specs/fileupload.js'],
     },
     // Patterns to exclude.
     exclude: [
@@ -141,7 +142,14 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec','junit',['allure', {outputDir: 'allure-results'}]],
+    reporters: ['spec','junit',
+    ['allure', {outputDir: 'allure-results'}],
+
+    [video, {
+        saveAllVideos: true,       // If true, also saves videos for successful test cases
+        videoSlowdownMultiplier: 10, // Higher to get slower videos, lower for faster videos [Value 1-100]
+        videoRenderTimeout: 5,
+      }],],
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -202,10 +210,9 @@ export const config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {object}         browser      instance of created browser/device session
      */
-    before: function (capabilities, specs) {
-        // LoginPage.open()
+     before: function (capabilities, specs) {
         LoginPage.login('kawsar.ahmed@selise.ch', 'J2x2E0z5w^bR')
-    },
+     },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {string} commandName hook command name

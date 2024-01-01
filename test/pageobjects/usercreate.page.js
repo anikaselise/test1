@@ -23,6 +23,9 @@ class USERCreate extends Page {
     
     
     async USERCreate () {
+        await browser.waitUntil(async () => {
+            return await this.click_user.isExisting();
+        }, {timeout : 100000})
         // await browser.debug();
         await this.click_user.click();
         await browser.pause(2000)

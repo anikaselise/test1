@@ -16,12 +16,16 @@
         "wdio-intercept-service": "^4.4.0"
     },
     "scripts": {
-      "publish": "npx allure generate --clean && npx allure serve allure-results",
+        "publish": "npx allure generate --clean && npx allure serve allure-results",
         "wdio": "npx wdio run ./wdio.conf.js",
         "login": "npx wdio run ./wdio.conf.js --suite login",
         "uidgenerate": "npx wdio run ./wdio.conf.js --suite uidgenerate",
-        "pwa": "npx wdio run ./wdio.conf.js --suite pwa"
-        
-
+        "pwa": "npx wdio run ./wdio.conf.js --suite pwa",
+        "dashboard": "npx wdio run ./wdio.conf.js --suite dashboard",
+        "usercreate": "npx wdio run ./wdio.conf.js --suite usercreate",
+        "fileupload": "npx wdio run ./wdio.conf.js --suite fileupload"
+    },
+    "dependencies": {
+        "wdio-video-reporter": "^4.0.5"
     }
 }
