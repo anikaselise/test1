@@ -1,4 +1,5 @@
 import environment from "./environment.js";
+import LoginPage from './test/pageobjects/login.page.js'
 
 let ENV = process.argv.find((val) => ['dev', 'stage', 'local'].includes(val));
 if (!ENV) ENV = 'stage';
@@ -33,6 +34,9 @@ export const config = {
     suites: {
       login: ['test/specs/test.e2e.js'],
       uidgenerate: ['test/specs/uidgenerate.js'],  
+      dashboard: ['test/specs/dashboard.js'],
+      pwa: ['test/specs/pwa.js'],
+      usercreate: ['test/specs/usercreate.js'],
     },
     // Patterns to exclude.
     exclude: [
@@ -198,8 +202,10 @@ export const config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
-    // },
+    before: function (capabilities, specs) {
+        // LoginPage.open()
+        LoginPage.login('kawsar.ahmed@selise.ch', 'J2x2E0z5w^bR')
+    },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {string} commandName hook command name
